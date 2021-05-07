@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:elevation="20dp"
+    android:background="@color/red"
+    android:orientation="horizontal">
+
+    <LinearLayout
+        android:id="@+id/linearlayout"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_margin="5dp"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/layout_dec"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/calculation"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_margin="5dp"
+            android:layout_marginEnd="5dp"
+            android:gravity="end"
+            android:padding="2dp"
+            android:text="30+30"
+            android:textSize="25sp" />
+
+        <TextView
+            android:id="@+id/result"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_margin="5dp"
+            android:layout_marginEnd="5dp"
+            android:gravity="end"
+            android:padding="2dp"
+            android:text="30+30"
+            android:textSize="25sp" />
+
+    </LinearLayout>
+
+
+</androidx.cardview.widget.CardView>
