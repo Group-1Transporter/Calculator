@@ -1,20 +1,16 @@
 package com.example.calculatar;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.room.Room;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
-import android.view.View;
 import android.widget.Toast;
 
-import com.example.calculatar.Room.History;
+import com.example.calculatar.Models.History;
+
 import com.example.calculatar.Room.MyDatabase;
 import com.example.calculatar.databinding.ActivityMainBinding;
-
-import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -27,7 +23,8 @@ public class MainActivity extends AppCompatActivity {
     private final char Multiplication = '*';
     private final char Division = '/';
     private final char Equ = '0';
-    MyDatabase myDatabase;
+    MyDatabase database;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        //All Click Listners
         binding.btn0.setOnClickListener(view -> binding.numDetails.setText(binding.numDetails.getText().toString() + "0"));
         binding.btn1.setOnClickListener(view -> binding.numDetails.setText(binding.numDetails.getText().toString() + "1"));
         binding.btn2.setOnClickListener(view -> binding.numDetails.setText(binding.numDetails.getText().toString() + "2"));
@@ -62,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         binding.btnAddition.setOnClickListener(view -> {
-
+            //Addition Opperation
             if (!Double.isNaN(inputNumber1) || !TextUtils.isEmpty(binding.numDetails.getText().toString())) {
                 compute();
                 operation = Addition;
@@ -74,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         binding.btnSubtraction.setOnClickListener(view -> {
+            //Subtraction Operation
             if (!Double.isNaN(inputNumber1) || operation == Subtraction || !TextUtils.isEmpty(binding.numDetails.getText().toString())) {
 
                 compute();
@@ -88,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         binding.btnMultiply.setOnClickListener(view -> {
+            //Multiplication Operation
             if (!Double.isNaN(inputNumber1) || !TextUtils.isEmpty(binding.numDetails.getText().toString())) {
                 compute();
                 operation = Multiplication;
@@ -96,6 +96,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         binding.btnDivide.setOnClickListener(view -> {
+            //Divide Operation
             if (!Double.isNaN(inputNumber1) || !TextUtils.isEmpty(binding.numDetails.getText().toString())) {
                 compute();
                 operation = Division;
@@ -108,23 +109,28 @@ public class MainActivity extends AppCompatActivity {
             if (operation == '\0') {
 
             } else {
+
+
                 compute();
                 operation = Equ;
                 binding.result.setText(binding.result.getText().toString() + String.valueOf(inputNumber2));
                 binding.resultFinal.setText(String.valueOf(inputNumber1));
 
-            /*result  5+
+        /*Operation Perform in this manner
+                result  5+
                 inputNumber2 5=
                 inputNumber1 10
             */
 
                 // Insert data into Room database
                 History history = new History(binding.result.getText().toString(), binding.numDetails.getText().toString(), binding.resultFinal.getText().toString());
-                roomDbSetUp();
-                myDatabase.dao().historyInsertion(history);
+                DataBaseOperatios dataBaseOperatios = new DataBaseOperatios(this);
+                dataBaseOperatios.roomDbSetUp();
+                dataBaseOperatios.myDatabase.dao().historyInsertion(history);
                 Toast.makeText(MainActivity.this, "data insert Sucessfulley", Toast.LENGTH_LONG).show();
 
             }
+            //For Clearing Screen
             inputNumber1 = Double.NaN;
             inputNumber2 = Double.NaN;
             operation = '\0';
@@ -132,7 +138,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         binding.btnClear.setOnClickListener(view -> {
-
+            //For Clear All Data from the screen
             inputNumber1 = Double.NaN;
             inputNumber2 = Double.NaN;
             binding.numDetails.setText(null);
@@ -142,6 +148,8 @@ public class MainActivity extends AppCompatActivity {
 
         });
         binding.btnBack.setOnClickListener(view -> {
+            //If editText have input so first they clear one by one and then editText is Clear then clear Screen
+
             if (binding.numDetails.getText().length() > 0) {
                 CharSequence name = binding.numDetails.getText().toString();
                 binding.numDetails.setText(name.subSequence(0, name.length() - 1));
@@ -158,6 +166,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void compute() {
         if (!Double.isNaN(inputNumber1)) {
+            //All Operation Logic is Written Here
+
             inputNumber2 = Double.parseDouble(binding.numDetails.getText().toString());
             switch (operation) {
                 case Addition:
@@ -183,10 +193,6 @@ public class MainActivity extends AppCompatActivity {
                 inputNumber1 = Double.parseDouble(binding.numDetails.getText().toString());
             }
         }
-    }
-
-    private void roomDbSetUp() {
-        myDatabase = Room.databaseBuilder(this, MyDatabase.class, "Historydb").allowMainThreadQueries().build();
     }
 
 }

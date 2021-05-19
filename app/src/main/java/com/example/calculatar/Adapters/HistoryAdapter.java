@@ -9,13 +9,11 @@ import android.widget.ArrayAdapter;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.example.calculatar.Models.History;
 import com.example.calculatar.R;
-import com.example.calculatar.Room.History;
-import com.example.calculatar.databinding.ActivityHistoryBinding;
 import com.example.calculatar.databinding.HistoryListBinding;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class HistoryAdapter extends ArrayAdapter {
     Context context;
