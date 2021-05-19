@@ -6,19 +6,13 @@ import androidx.room.Room;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.Adapter;
-import android.widget.LinearLayout;
-import android.widget.ListAdapter;
 import android.widget.Toast;
 
 import com.example.calculatar.Adapters.HistoryAdapter;
-import com.example.calculatar.Room.History;
+import com.example.calculatar.Models.History;
+
 import com.example.calculatar.Room.MyDatabase;
 import com.example.calculatar.databinding.ActivityHistoryBinding;
-import com.example.calculatar.databinding.ToolbarBinding;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,6 +40,7 @@ public class HistoryActivity extends AppCompatActivity {
         //fatching data from data base
         roomDbSetUp();
         List<History> historyList = myDatabase.dao().getHistory();
+        //List<History> historyList = myDatabase.dao().getHistory();
         al = new ArrayList<>();
         al.addAll(historyList);
         HistoryAdapter adapter = new HistoryAdapter(this, al);

@@ -1,4 +1,5 @@
-package com.example.calculatar.Room;
+package com.example.calculatar.Models;
+
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
